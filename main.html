@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 Kurul Sınavı Portal 🌌</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --glow-primary: rgba(0, 220, 255, 0.8); /* Electric Blue Glow */
+            --glow-secondary: rgba(255, 0, 255, 0.7); /* Vibrant Magenta Glow */
+            --accent-color: #00ffcc; /* Aqua/Turquoise Accent */
+            --bg-deep-space: #0a0014;
+            --bg-nebula-1: #2a0040;
+            --bg-nebula-2: #00204a;
+            --text-bright: #ffffff;
+            --text-mid: #d0d0e0; /* Lighter mid-tone */
+            --glass-bg: rgba(10, 0, 20, 0.3); /* Darker, more purple glass */
+            --glass-border: rgba(0, 220, 255, 0.3); /* Match primary glow */
+            --star-color: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Complex background */
+            background-color: var(--bg-deep-space);
+            background-image:
+                radial-gradient(circle at 20% 30%, var(--bg-nebula-1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--bg-nebula-2) 0%, transparent 40%);
+            background-size: 150% 150%;
+            background-position: 0% 0%;
+            animation: backgroundMove 25s ease infinite alternate;
+            color: var(--text-bright);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden; /* Crucial */
+            position: relative; /* For pseudo-element stars */
+        }
+
+        /* Starfield Effect */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, var(--star-color), transparent),
+                radial-gradient(1px 1px at 40px 70px, var(--star-color), transparent),
+                radial-gradient(1px 1px at 50px 160px, var(--star-color), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--star-color), transparent),
+                radial-gradient(2px 2px at 130px 80px, var(--star-color), transparent),
+                radial-gradient(1px 1px at 160px 120px, var(--star-color), transparent);
+            background-size: 200px 200px;
+            background-position: 0 0;
+            animation: starsMove 60s linear infinite;
+            z-index: -1; /* Behind everything */
+            opacity: 0.6;
+        }
+
+        @keyframes backgroundMove {
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes starsMove {
+             from { background-position: 0 0; }
+             to { background-position: -1000px 500px; } /* Adjust for desired drift */
+        }
+
+        .art-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px 55px;
+            width: 90%;
+            max-width: 900px;
+            position: relative; /* Needed for pseudo-elements and absolute positioning */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4), /* Base shadow */
+                        inset 0 0 20px rgba(10, 0, 20, 0.5); /* Inner dark shadow */
+            transform: perspective(1200px) rotateY(-1deg) rotateX(2deg);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.4s ease;
+            z-index: 1; /* Above stars */
+        }
+        .art-container:hover {
+             transform: perspective(1200px) rotateY(0deg) rotateX(0deg) scale(1.01);
+             box-shadow: 0 0 30px rgba(0, 0, 0, 0.4),
+                         inset 0 0 20px rgba(10, 0, 20, 0.5),
+                         0 0 50px var(--glow-primary); /* Enhanced glow on hover */
+        }
+
+        /* Animated Gradient Border */
+        .art-container::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px; /* Create border space */
+            background: linear-gradient(120deg, var(--glow-primary), var(--glow-secondary), var(--accent-color), var(--glow-primary));
+            background-size: 300% 300%;
+            border-radius: 32px; /* Slightly larger than container */
+            z-index: -1; /* Behind container content but above body */
+            animation: borderGradient 8s linear infinite;
+            filter: blur(3px); /* Soften the border glow */
+        }
+
+        @keyframes borderGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Orbs */
+        .art-container::after { /* Orb 1 */
+            content: '';
+            position: absolute;
+            width: 80px; height: 80px;
+            background: radial-gradient(circle, rgba(0, 255, 204, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -40px; right: -30px;
+            z-index: 0; /* Above border, below potential interactive elements */
+            animation: floatOrb1 15s ease-in-out infinite alternate;
+            filter: blur(5px);
+        }
+        /* Add more pseudo-elements or dedicated divs for more orbs */
+
+
+        @keyframes floatOrb1 {
+             0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+             100% { transform: translate(-20px, 15px) scale(1.1); opacity: 0.8; }
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.2em, 6vw, 4em);
+            font-weight: 800; /* Bolder */
+            text-align: center;
+            color: var(--text-bright);
+            text-shadow: 0 0 8px var(--text-bright),
+                         0 0 20px var(--glow-primary),
+                         0 0 35px var(--glow-primary),
+                         0 0 50px var(--glow-secondary); /* Layered glow */
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulseText 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseText {
+            from { text-shadow: 0 0 8px var(--text-bright), 0 0 20px var(--glow-primary), 0 0 35px var(--glow-primary), 0 0 50px var(--glow-secondary); }
+            to { text-shadow: 0 0 10px var(--text-bright), 0 0 25px var(--glow-primary), 0 0 45px var(--glow-primary), 0 0 65px var(--glow-secondary); }
+        }
+
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-mid);
+            margin-bottom: 50px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .info-capsule {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px; /* Slightly less round */
+            padding: 20px 25px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.3), inset 0 0 5px rgba(0,0,0,0.2);
+            opacity: 0; /* For animation */
+            transform: translateY(20px); /* For animation */
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        /* Staggered Animation */
+        .info-capsule:nth-child(1) { animation-delay: 0.2s; }
+        .info-capsule:nth-child(2) { animation-delay: 0.3s; }
+        .info-capsule:nth-child(3) { animation-delay: 0.4s; }
+
+        .info-capsule:hover {
+            background: rgba(0, 220, 255, 0.1); /* Match primary glow on hover */
+            box-shadow: 0 0 25px var(--glow-primary), inset 0 0 10px rgba(0, 220, 255, 0.2);
+            transform: scale(1.08) translateY(0);
+            border-color: rgba(0, 220, 255, 0.6);
+        }
+
+        .info-capsule .label {
+            display: block;
+            font-size: 0.9em;
+            color: var(--text-mid);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .info-capsule .value {
+            font-family: 'Orbitron', sans-serif; /* Use display font */
+            font-size: 1.6em;
+            font-weight: 500;
+            color: var(--text-bright);
+            text-shadow: 0 0 8px var(--glow-primary);
+        }
+
+         .rules-banner { /* Style remains similar, maybe adjusted colors */
+            background: linear-gradient(90deg, transparent, var(--glow-secondary), transparent);
+            padding: 15px 35px;
+            margin: 50px -55px; /* Extend outside padding */
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+            transform: rotate(-1deg) scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+         }
+
+        .distribution-title {
+             font-family: 'Orbitron', sans-serif;
+             text-align: center;
+             font-size: 2em;
+             color: var(--text-bright);
+             margin: 70px 0 40px 0;
+             text-shadow: 0 0 15px var(--glow-primary);
+             text-transform: uppercase;
+             letter-spacing: 2px;
+        }
+
+        .subject-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Increased gap */
+            padding: 30px 0;
+            min-height: 250px;
+            position: relative;
+        }
+
+        .subject-tag {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 1em; /* Slightly larger base size */
+            font-weight: 400;
+            color: var(--text-mid); /* Use mid text for name */
+            box-shadow: 0 0 8px rgba(0,0,0,0.2), inset 0 0 8px rgba(0,0,0,0.15);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Added bounce */
+            display: inline-flex;
+            align-items: baseline;
+            gap: 10px;
+            opacity: 0; /* For animation */
+            transform: translateY(20px); /* For animation */
+            animation: fadeInUp 0.6s ease-out forwards;
+             /* Stagger animation for tags - can be complex with flex-wrap */
+             /* Simple delay for first few items */
+        }
+         .subject-tag:nth-child(1) { animation-delay: 0.5s; }
+         .subject-tag:nth-child(2) { animation-delay: 0.55s; }
+         .subject-tag:nth-child(3) { animation-delay: 0.6s; }
+         .subject-tag:nth-child(4) { animation-delay: 0.65s; }
+         .subject-tag:nth-child(5) { animation-delay: 0.7s; }
+         /* ... add more delays if needed */
+
+
+        .subject-tag:hover {
+            background: rgba(0, 255, 204, 0.15); /* Use accent color */
+            transform: translateY(-5px) scale(1.15) rotate(2deg);
+            box-shadow: 0 8px 25px var(--accent-color), inset 0 0 10px rgba(0, 255, 204, 0.2);
+            border-color: var(--accent-color);
+            z-index: 10;
+            color: var(--text-bright); /* Brighten text on hover */
+        }
+
+        .tag-name {
+             opacity: 0.9;
+        }
+
+        .tag-count {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--accent-color); /* Use accent color */
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .final-message {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.6em;
+            font-weight: 600;
+            color: var(--text-bright);
+            text-shadow: 0 0 15px var(--glow-primary), 0 0 25px var(--glow-secondary);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
+        }
+
+        /* Fade-in Up Animation */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+         /* Responsiveness */
+         @media (max-width: 768px) {
+             body { padding: 20px; }
+             .art-container { padding: 30px 20px; transform: none !important; }
+             .art-container::before { display: none; } /* Hide animated border on mobile */
+             .art-container::after { display: none; } /* Hide orb on mobile */
+             .main-title { font-size: clamp(1.8em, 8vw, 2.8em); animation: none; /* Disable pulse on mobile */}
+             .subtitle { font-size: 1em; margin-bottom: 30px; }
+             .info-grid { grid-template-columns: 1fr; gap: 15px; margin-bottom: 30px;}
+             .info-capsule { padding: 15px 20px; }
+             .info-capsule .value { font-size: 1.4em; }
+             .rules-banner { margin: 30px -20px; transform: rotate(0deg) scale(1); padding: 12px 20px; font-size: 1em;}
+             .distribution-title { font-size: 1.6em; margin-top: 40px; }
+             .subject-cloud { padding: 15px 0; gap: 12px; }
+             .subject-tag { font-size: 0.9em; padding: 8px 12px; }
+             .final-message { font-size: 1.3em; margin-top: 40px;}
+             /* Adjust animation delays if needed */
+         }
+
+    </style>
+</head>
+<body>
+
+    <!-- Starfield is on body::before -->
+    <div class="art-container">
+        <!-- Animated border is art-container::before -->
+        <!-- Floating orb is art-container::after -->
+
+        <h1 class="main-title">Sınav Portalı</h1>
+        <p class="subtitle">SİNİR VE HAREKET SİSTEMİ HASTALIKLARI :: Evrensel Bahar 2024-2025</p>
+
+        <div class="info-grid">
+            <div class="info-capsule">
+                <span class="label">Yıldız Tarihi</span>
+                <span class="value">25 Nisan 2025</span>
+            </div>
+            <div class="info-capsule">
+                 <span class="label">Senkronizasyon</span>
+                <span class="value">10:00</span>
+            </div>
+            <div class="info-capsule">
+                 <span class="label">Soru Matrisi</span>
+                <span class="value">100 Birim</span>
+            </div>
+        </div>
+
+        <div class="rules-banner">
+            ⚡ Tekno-Aygıtlar Sınav Boyunca Enerji Alanı Dışında Tutulmalıdır! ⚡
+        </div>
+
+        <h2 class="distribution-title">Konu Spektrumu</h2>
+        <div class="subject-cloud">
+            <div class="subject-tag"><span class="tag-name">Tıbbi Farmakoloji</span> <span class="tag-count">19</span></div>
+            <div class="subject-tag"><span class="tag-name">Tıbbi Patoloji</span> <span class="tag-count">18</span></div>
+            <div class="subject-tag"><span class="tag-name">Kliniğe Giriş</span> <span class="tag-count">12</span></div>
+            <div class="subject-tag"><span class="tag-name">Nöroloji</span> <span class="tag-count">10</span></div>
+            <div class="subject-tag"><span class="tag-name">Psikiyatri</span> <span class="tag-count">7</span></div>
+            <div class="subject-tag"><span class="tag-name">Ortopedi ve T.</span> <span class="tag-count">7</span></div> <!-- Abbreviated slightly -->
+            <div class="subject-tag"><span class="tag-name">İç Hastalıkları</span> <span class="tag-count">5</span></div>
+            <div class="subject-tag"><span class="tag-name">Pediatri</span> <span class="tag-count">5</span></div>
+            <div class="subject-tag"><span class="tag-name">Fizik Tedavi & R.</span> <span class="tag-count">5</span></div> <!-- Abbreviated slightly -->
+            <div class="subject-tag"><span class="tag-name">Göz Hastalıkları</span> <span class="tag-count">5</span></div>
+            <div class="subject-tag"><span class="tag-name">Radyoloji</span> <span class="tag-count">3</span></div>
+            <div class="subject-tag"><span class="tag-name">Plastik & R. Cerrahi</span> <span class="tag-count">3</span></div> <!-- Abbreviated slightly -->
+            <div class="subject-tag"><span class="tag-name">KBB</span> <span class="tag-count">1</span></div>
+        </div>
+
+        <p class="final-message">✨ Evren Sizinle Olsun! ✨</p>
+
+    </div>
+
+</body>
+</html>
